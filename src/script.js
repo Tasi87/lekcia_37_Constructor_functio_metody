@@ -1,27 +1,49 @@
-//idea	Constructor function
-// funkcia, ktorá vracia inštanciu objektu
+//idea	Constructor function pridávanie metód
 
 function CreateWizard(firstName, mySpell) {
 	this.name 	= firstName
 	this.spell	= mySpell
+	//note jeden spôsob
+	// this.attack = function () {
+	// 	return "útok pomocou kúzla " + this.spell
+	// }
+}
 
-	//! return vracia iba neprimitívne dátové typy: object a array
-	//! tvoriť bez "return"
+	//note druhý spôsob na prototype
+CreateWizard.prototype.attack = function () {
+		return "útok pomocou kúzla " + this.spell
+	}
+
+// toto je na Object.prototype, preto má wizard prístup
+Object.prototype.attack2 = function () {
+	return "Útok!!!!"
 }
 
 const wizard1 = new CreateWizard("David", "abraka")
 console.log(wizard1)
-// console.log(wizard1.name)
-// console.log(wizard1.spell)
+console.log(wizard1.attack())
+console.log(wizard1.attack2())
 
+const wizard2 = new CreateWizard("Harry", "imobilus")
+console.log(wizard2.attack())
+console.log(wizard2.attack2())
+
+const newObject = {}
+console.log(newObject.attack2())		// Útok!!!!
+
+const myArray = [1, 2, 3]
+console.log(myArray.prototype)		// undefined
+console.log(myArray.__proto__)		// existuje
+
+//idea prototype VS __proto__
 /**
-//note Znaky Constructor function:
-	- názov funkcie začína veľkým písmenom
-	- používa kľúčove slovo //! "this"
-	- používa //! "new" 
+Prototype 	- konkrétny objekt, ktorý sa robí, keď mám objekt vytvorený pomocou
+				Constructor function.
 
-//note Keď sa použije slovo "new":
-	- vytvorí sa prázdny object
-	- priradí "this" novo vytvorenému object
-	- vráti object
+Object.prototype	-	je dostupný všetkým objektom v JS, pretože tie všetky objekty z neho
+						nejakým spôsobom dedia alebo majú prístup.
+
+__proto__	- prístup k nejakému reťazeniu, nie je objekt, ktorý dáva nejakú špeciálnu
+				funkčnosť. Dovedie to k funkčnosti. Je to práca v pozadí, ktorá kontroluje,
+				či nemám v pozadí niečo, čo potrebujem.
 */
